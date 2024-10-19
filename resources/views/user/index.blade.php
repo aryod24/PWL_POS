@@ -3,9 +3,11 @@
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">{{ $page->title }}</h3>
+        <h3 class="card-title">Daftar User</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
+            <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-sm btn-info mt-1">Import User </button>
+            <a href="{{url('/user/export_excel')}}" class="btn btn-sm btn-primary mt-1"><i class="fa fa-file-excel"></i> Export User(Excel)</a>
+            <a href="{{url('/user/export_pdf')}}" class="btn btn-sm btn-warning mt-1"><i class="fa fa-file-pdf"></i> Export User(PDF)</a>
             <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
         </div>
     </div>
@@ -31,8 +33,8 @@
                                 <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
                             @endforeach
                         </select>
+                        <small class="form-text text-muted">Level Pengguna</small>
                     </div>
-                    <small class="form-text text-muted">Level Pengguna</small>
                 </div>
             </div>
         </div>
@@ -49,26 +51,23 @@
         </table>
     </div>
 </div>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" 
-data-keyboard="false" data-width="75%" aria-hidden="true"></div>
-
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" databackdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
+
 @push('css')
 @endpush
 
 @push('js')
     <script>
-        // Fungsi modalAction untuk load konten ke dalam modal
-    function modalAction(url = '') {
-        $('#myModal').load(url, function() {
-            $('#myModal').modal('show');
-        });
-    }
-    var dataUser;
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
+
+        var dataUser;
         $(document).ready(function() {
-            dataUser = $('#table_user').DataTable({
+            var dataUser = $('#table_user').DataTable({
                 // serverSide: true, jika ingin menggunakan server side processing
                 serverSide: true,
                 ajax: {
@@ -80,7 +79,6 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     }
                 },
                 columns: [{
-                    // nomor urut dari laravel datatable addIndexColumn()
                     // nomor urut dari laravel datatable addIndexColumn()
                     data: "DT_RowIndex",
                     className: "text-center",
@@ -111,6 +109,7 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     searchable: false
                 }]
             });
+
             $('#level_id').on('change', function() {
                 dataUser.ajax.reload();
             });
