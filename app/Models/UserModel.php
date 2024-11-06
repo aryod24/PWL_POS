@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-
-class UserModel extends Authenticatable
+class UserModel extends Authenticatable implements JWTSubject
 {
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims(){
+        return [];
+    }
+    
     use HasFactory;
 
     protected $table = 'm_user'; // Mendefinisikan nama tabel yang digunakan oleh model ini
