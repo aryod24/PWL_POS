@@ -1,5 +1,7 @@
 @extends('layouts.template')
+
 @section('content')
+
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
@@ -11,7 +13,7 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
                     Data yang Anda cari tidak ditemukan.
                 </div>
-            @else
+                @else
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <tr>
                         <th>ID</th>
@@ -31,15 +33,18 @@
                     </tr>
                     <tr>
                         <th>Password</th>
-                        <td>****</td>
+                        <td>********</td>
                     </tr>
                 </table>
             @endempty
-        <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+            <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+        </div>
     </div>
-</div>
+
 @endsection
+
 @push('css')
 @endpush
+
 @push('js')
 @endpush

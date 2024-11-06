@@ -4,16 +4,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Data User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Level Pengguna</label>
                     <select name="level_id" id="level_id" class="form-control" required>
                         <option value="">- Pilih Level -</option>
-                        @foreach($level as $l)
+                        @foreach ($level as $l)
                             <option value="{{ $l->level_id }}">{{ $l->level_nama }}</option>
                         @endforeach
                     </select>

@@ -32,6 +32,31 @@
     <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" databackdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 @push('css')
+    <style>
+        /* Styling untuk tabel */
+        .table {
+            border-radius: 0.5rem; /* Sudut tabel membulat */
+            overflow: hidden; /* Menghindari border radius di luar tabel */
+        }
+
+        .table thead {
+            background-color: #007bff; /* Warna latar belakang header */
+            color: white; /* Warna teks header */
+        }
+
+        .table th, .table td {
+            padding: 10px; /* Jarak dalam sel */
+            text-align: center; /* Rata tengah */
+        }
+
+        .table tbody tr {
+            transition: background-color 0.3s; /* Animasi saat hover */
+        }
+
+        .table tbody tr:hover {
+            background-color: #f0f8ff; /* Warna latar belakang saat hover */
+        }
+    </style>
 @endpush
 @push('js')
     <script>

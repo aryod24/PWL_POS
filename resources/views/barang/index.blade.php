@@ -6,7 +6,7 @@
             <div class="card-tools">
                 <button onclick="modalAction('{{url('barang/import')}}')" class="btn btn-sm btn-info mt-1">Import Barang</button>
                 <a href="{{url('/barang/export_excel')}}" class="btn btn-sm btn-primary mt-1"><i class="fa fa-file-excel"></i> Export Barang (Excel)</a>
-            <a href="{{ url('/barang/export_pdf') }}" class="btn btn-sm btn-warning mt-1"><i class="fa fa-file-pdf"></i> Export Barang (PDF)</a>
+                <a href="{{ url('/barang/export_pdf') }}" class="btn btn-sm btn-warning mt-1"><i class="fa fa-file-pdf"></i> Export Barang (PDF)</a>
                 <button onclick="modalAction('{{ url('barang/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
             </div>
         </div>
@@ -53,8 +53,35 @@
     <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
         data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
+
 @push('css')
+    <style>
+        /* Styling untuk tabel */
+        .table {
+            border-radius: 0.5rem; /* Sudut tabel membulat */
+            overflow: hidden; /* Menghindari border radius di luar tabel */
+        }
+
+        .table thead {
+            background-color: #007bff; /* Warna latar belakang header */
+            color: white; /* Warna teks header */
+        }
+
+        .table th, .table td {
+            padding: 10px; /* Jarak dalam sel */
+            text-align: center; /* Rata tengah */
+        }
+
+        .table tbody tr {
+            transition: background-color 0.3s; /* Animasi saat hover */
+        }
+
+        .table tbody tr:hover {
+            background-color: #f0f8ff; /* Warna latar belakang saat hover */
+        }
+    </style>
 @endpush
+
 @push('js')
     <script>
         function modalAction(url = '') {
@@ -78,7 +105,6 @@
         }
         $(document).ready(function() {
             dataBarang = $('#table_user').DataTable({
-                // serverSide: true, jika ingin menggunakan server side processing
                 serverSide: true,
                 ajax: {
                     "url": "{{ url('barang/list') }}",

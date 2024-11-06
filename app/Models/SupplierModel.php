@@ -9,16 +9,14 @@ class SupplierModel extends Model
 {
     use HasFactory;
 
-    // Mendefinisikan nama tabel yang digunakan oleh model ini
-    protected $table = 'm_supplier';
+    protected $table = 'm_supplier';        // Mendefinisikan nama tabel yang digunakan oleh model ini
+    protected $primaryKey = 'supplier_id';  // Mendfinisikan primary key dari tabel yang digunakan
 
-    // Mendefinisikan primary key dari tabel supplier
-    protected $primaryKey = 'supplier_id'; 
+    /**
+     * The attributes that are mass assignable
+     * 
+     * @var array
+     */
 
-    // Kolom yang boleh diisi secara massal
-    protected $fillable = [
-        'supplier_kode', 
-        'supplier_nama', 
-        'supplier_alamat', 
-    ];
+     protected $fillable = ['supplier_id', 'supplier_kode', 'supplier_nama'];
 }
