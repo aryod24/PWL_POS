@@ -48,12 +48,12 @@ Route::group(['prefix'=>'kategories'], function(){
     Route::delete('/{kategori}', [KategoriController::class, 'destroy']);
 });
 
-Route::group(['prefix'=>'barangs'], function(){
+Route::group(['prefix' => 'barangs'], function () {
     Route::get('/', [BarangController::class, 'index']);
     Route::post('/', [BarangController::class, 'store']);
     Route::get('/{barang}', [BarangController::class, 'show']);
-    Route::put('/{barang}', [BarangController::class, 'update']);
     Route::delete('/{barang}', [BarangController::class, 'destroy']);
-    
+    Route::put('/{barang}', [BarangController::class, 'update']); // Add this line for update
     Route::post('/barang1', App\Http\Controllers\Api\BarangController::class)->name('barang1');
 });
+

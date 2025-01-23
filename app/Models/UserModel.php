@@ -48,9 +48,9 @@ class UserModel extends Authenticatable implements JWTSubject
         return $this->level->level_kode;
     }
     protected function avatar(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($avatar) => url('/storage/posts/' . $avatar),
-        );
-    }
+{
+    return Attribute::make(
+        get: fn ($avatar) => url('/storage/posts/' . $avatar)
+    );
+}
 }

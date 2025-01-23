@@ -32,6 +32,11 @@ Route::post('register', [AuthController::class, 'store']);
 Route::middleware('auth')->group(function () {
     Route::get('/welcome', [WelcomeController::class, 'index']);
 });
+Route::group(['prefix' => 'profile'], function () {
+    Route::get('/edit', [UserController::class, 'profile']);
+    Route::post('/update_profile', [UserController::class, 'update_profile']); 
+    Route::post('/update_info', [UserController::class, 'update_info']);
+});
 
 Route::group(['prefix' =>'profile','middleware'=>'authorize:ADM,MNG,STF,CUS'],function(){
     Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
@@ -202,11 +207,6 @@ Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
     Route::put('/detail/{id}/update_ajax', [DetailController::class, 'update_ajax']);
     Route::get('/detail/{id}/delete_ajax', [DetailController::class, 'confirm_ajax']);
     Route::delete('/detail/{id}/delete_ajax', [DetailController::class, 'delete_ajax']);
-});
-Route::group(['prefix' => 'profile'], function () {
-    Route::get('/edit', [UserController::class, 'profile']);
-    Route::post('/update_profile', [UserController::class, 'update_profile']); 
-    Route::post('/update_info', [UserController::class, 'update_info']);
 });
 
 // use App\Http\Controllers\KategoriController;
