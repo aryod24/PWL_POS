@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\BarangModel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage; // Import Storage facade
+use Illuminate\Support\Facades\Storage; 
 
 class BarangController extends Controller
 {
@@ -18,37 +18,48 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input
         $validator = Validator::make($request->all(), [
-            'kategori_id' => 'required',
-            'barang_kode' => 'required',
+            'kategori_id' => 'nullable',
+            'barang_kode' => 'nullable',
             'barang_nama' => 'required',
-            'harga_beli' => 'required',
-            'harga_jual' => 'required',
-            'transaksi' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add validation for transaksi
+            'harga_beli' => 'nullable',
+            'harga_jual' => 'nullable',
+            'transaksi' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
+    
         // Return validation errors
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+    
+        // Pengecekan apakah barang_nama sudah ada
+        $existingBarang = BarangModel::where('barang_nama', $request->barang_nama)->first();
+        if ($existingBarang) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Barang dengan nama tersebut sudah ada!',
+            ], 409);
+        }
+    
         // Handle file upload
+        $filename = null;
         if ($request->hasFile('transaksi')) {
             $file = $request->file('transaksi');
             $filename = time().'_'.$file->getClientOriginalName();
             $file->storeAs('public/posts', $filename);
         }
-
-        // Create new entry with transaksi
+    
+        // Buat entri baru
         $barang = BarangModel::create([
             'kategori_id' => $request->kategori_id,
             'barang_kode' => $request->barang_kode,
             'barang_nama' => $request->barang_nama,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
-            'transaksi' => $filename, // Update the model with transaksi filename
+            'transaksi' => $filename,
         ]);
-
+    
         // Return success response
         if ($barang) {
             return response()->json([
@@ -56,10 +67,10 @@ class BarangController extends Controller
                 'barang' => $barang,
             ], 201);
         }
-
+    
         return response()->json(['success' => false], 409);
     }
-
+    
     public function show(BarangModel $barang)
     {
         return response()->json($barang);
@@ -121,8 +132,7 @@ class BarangController extends Controller
             'success' => true,
             'barang' => $barang,
         ]);
-    }
-    
+    }    
     
     public function __invoke(Request $request)
     {
