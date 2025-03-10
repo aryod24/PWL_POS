@@ -43,7 +43,7 @@ class BarangController extends Controller
         }
     
         // Handle file upload
-        $filename = null;
+        $filename = null; // Default filename is null
         if ($request->hasFile('transaksi')) {
             $file = $request->file('transaksi');
             $filename = time().'_'.$file->getClientOriginalName();
@@ -178,4 +178,27 @@ class BarangController extends Controller
 
         return response()->json(['success' => false], 409);
     }
+    public function search(Request $request)
+{
+    // Ambil parameter pencarian, misalnya dari query string: ?barang_nama=keyword
+    $keyword = $request->input('barang_nama');
+
+    // Jika keyword tidak ada, kembalikan error
+    if (!$keyword) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Parameter barang_nama diperlukan untuk pencarian.'
+        ], 422);
+    }
+
+    // Lakukan pencarian dengan query LIKE
+    $barang = BarangModel::where('barang_nama', 'LIKE', "%{$keyword}%")->get();
+
+    // Kembalikan response dengan data yang ditemukan
+    return response()->json([
+        'success' => true,
+        'barang' => $barang,
+    ], 200);
+}
+
 }

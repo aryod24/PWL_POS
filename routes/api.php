@@ -53,7 +53,8 @@ Route::group(['prefix' => 'barangs'], function () {
     Route::post('/', [BarangController::class, 'store']);
     Route::get('/{barang}', [BarangController::class, 'show']);
     Route::delete('/{barang}', [BarangController::class, 'destroy']);
-    Route::put('/{barang}', [BarangController::class, 'update']); // Add this line for update
+    Route::put('/{barang}', [BarangController::class, 'update']);
     Route::post('/barang1', App\Http\Controllers\Api\BarangController::class)->name('barang1');
+    Route::get('/barang/search', [BarangController::class, 'search']);
 });
 
